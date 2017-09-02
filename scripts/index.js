@@ -1,3 +1,6 @@
+import "../stylesheets/index.scss";
+const dragdealer = require("dragdealer");
+
 var fearsBox = document.getElementsByClassName("fears-box")[0],
     fearsList = document.getElementsByClassName("fears-list")[0],
     fearBar = document.getElementsByClassName("fear-bar")[0],
@@ -12,8 +15,6 @@ if(localStorage.getItem("fears") == null){
 else{
   fillFears();
 }
-//instantiate drag-n-drop
-var drake = dragula();
 
 //note, when I use 'add' in a function name
 //it refers to localStorage or another data object
@@ -87,7 +88,7 @@ function fillFear(item){
   
 
   
-  var slider = new Dragdealer(slideBox,{
+  var slider = new dragdealer(slideBox,{
     steps: 3,
     x: 0.5,
     loose: true
@@ -99,8 +100,9 @@ function fillFear(item){
   //reflow to activate sliders
   slider.reflow();
   
-  console.log("fear filled");
 }
+
+var fearActions = {"edit-fear" : editFear, "remove-fear": removeFear}
 
 function fearComponent(fearData){
   var holder = document.createElement("div"),
@@ -123,7 +125,7 @@ function fearComponent(fearData){
   
   //holds actions like edit, delete, time
   actionsHolder.className += " actions-holder";
-  actionsHolder.innerHTML = "<div onclick='timeFear(this)'><i class='fa fa-clock-o' aria-hidden='true'></i></div><div onclick='editFear(this)' class='edit-fear'><i class='fa fa-pencil '  aria-hidden='true'></i></div><div onclick='removeFear(this)' class='remove-fear'><i class='fa fa-trash-o' aria-hidden='true'></i></div>"
+  actionsHolder.innerHTML = "<div class='time-fear'><i class='fa fa-clock-o' aria-hidden='true'></i></div><div  class='edit-fear'><i class='fa fa-pencil '  aria-hidden='true'></i></div><div class='remove-fear'><i class='fa fa-trash-o' aria-hidden='true'></i></div>"
   
   
   
@@ -131,6 +133,16 @@ function fearComponent(fearData){
   holder.appendChild(inputEdit);
   holder.appendChild(text);
   holder.appendChild(actionsHolder);
+
+  actionsHolder.addEventListener("click",function actionsHandler(e){
+    var classes = e.target.parentNode.className.split(" ");
+
+    for(var c of classes){
+      if(c.indexOf("-fear") != -1){
+        fearActions[c](e.target.parentNode);
+      }
+    }
+  });
 
   return holder;
 }
