@@ -210,7 +210,6 @@ function removeFear(elem){
       editor = holder.querySelector(".input-edit"),
       index = Array.prototype.indexOf.call(fearsList.children,holder.parentNode);
   
-  prompt("Are You Sure?");
   deleteFear(index);
   fearsList.removeChild(holder.parentNode);
 }
