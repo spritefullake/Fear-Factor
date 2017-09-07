@@ -11,6 +11,7 @@ var fearsBox = document.getElementsByClassName("fears-box")[0],
 //already
 if(localStorage.getItem("fears") == null){
   localStorage.setItem("fears",JSON.stringify([{"text":"Sample Fear","time":Date.now()}]));
+  fillFears();
 }
 else{
   fillFears();
