@@ -25,7 +25,7 @@ app.use(express.static(__dirname));
 // set the home page route
 app.get('/', function(req, res) {
 
-	res.sendFile(__dirname + '/docs/index.html');
+	res.sendFile(__dirname + '/dist/index.html');
 });
 
 app.listen(port, function() {
