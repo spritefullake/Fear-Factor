@@ -12,6 +12,7 @@
     "gzip-loader": "^0.0.1",
     "kube": "^1.5.3",
     "pg": "^7.3.0",
+    "pg-promise": "^6.5.1",
     "webpack": "^3.5.5"
   },
   "devDependencies": {
