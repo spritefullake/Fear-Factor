@@ -4,19 +4,30 @@ var pg = require('pg');
 
 // set the port of our application
 // process.env.PORT lets the port be set by Heroku
-var pg = require('pg');
+var connectionString = process.env.DATABASE_URL;
+var client = new pg.Client(connectionString);
+var pool = new pg.Pool();
+
+
+
 
 app.get('/db', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
+  
+    pool.query('SELECT * FROM test_table', function clientcb(err, result) {
+      //done();
+      console.log("IN QUERY");
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.render('pages/db', {results: result.rows} ); }
+       { /* response.render('pages/db', {results: result.rows} ); */
+          console.log("SUCCESS");}
     });
-  });
+
 });
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
 
 
 /*
